@@ -1,4 +1,3 @@
-
 class Chef < MiniActiveRecord::Model
   def self.all
     MiniActiveRecord::Model.execute("SELECT * FROM chefs").map do |row|
@@ -6,9 +5,10 @@ class Chef < MiniActiveRecord::Model
     end
   end
 
-  def self.create(attributes)
+  def self.create(attributes) #*
     record = self.new(attributes)
     record.save
+
     record
   end
 
