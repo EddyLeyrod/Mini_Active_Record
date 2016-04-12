@@ -28,32 +28,32 @@ class Chef < MiniActiveRecord::Model
   attr_reader :attributes, :old_attributes
 
   # e.g., Chef.new(id: 1, first_name: 'Steve', last_name: 'Rogers', ...)
-  def initialize(attributes = {})
-    attributes.symbolize_keys!
-    raise_error_if_invalid_attribute!(attributes.keys)
+  #def initialize(attributes = {})
+    # attributes.symbolize_keys!
+    # raise_error_if_invalid_attribute!(attributes.keys)
 
-    # This defines the value even if it's not present in attributes
-    @attributes = {}
+    # # This defines the value even if it's not present in attributes
+    # @attributes = {}
 
-    Chef.attribute_names.each do |name|
-      @attributes[name] = attributes[name]
-    end
+    # Chef.attribute_names.each do |name|
+    #   @attributes[name] = attributes[name]
+    # end
 
-    @old_attributes = @attributes.dup
-  end
+    # @old_attributes = @attributes.dup
+  #end
 
-  def save
-    if new_record?
-      results = insert!
-    else
-      results = update!
-    end
+  # def save
+  #   if new_record?
+  #     results = insert!
+  #   else
+  #     results = update!
+  #   end
 
-    # When we save, remove changes between new and old attributes
-    @old_attributes = @attributes.dup
+  #   # When we save, remove changes between new and old attributes
+  #   @old_attributes = @attributes.dup
 
-    results
-  end
+  #   results
+  # end
 
   # We say a record is "new" if it doesn't have a defined primary key in its
   # attributes
@@ -62,18 +62,18 @@ class Chef < MiniActiveRecord::Model
   end
 
   # e.g., chef[:first_name] #=> 'Steve'
-  def [](attribute)
-    raise_error_if_invalid_attribute!(attribute)
+  # def [](attribute)
+  #   raise_error_if_invalid_attribute!(attribute)
 
-    @attributes[attribute]
-  end
+  #   @attributes[attribute]
+  # end
 
   # e.g., chef[:first_name] = 'Steve'
-  def []=(attribute, value)
-    raise_error_if_invalid_attribute!(attribute)
+  # def []=(attribute, value)
+  #   raise_error_if_invalid_attribute!(attribute)
 
-    @attributes[attribute] = value
-  end
+  #   @attributes[attribute] = value
+  # end
 
   def meals
     Meal.where('chef_id = ?', self[:id])

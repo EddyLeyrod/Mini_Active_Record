@@ -28,7 +28,7 @@ p "all"
 p "find"
  Chef.find(1) 
 p "where"
- Chef.where('id = 20')
+Chef.where('last_name = "Fernandez"')
 assert p chef[:first_name] == 'Eduardo'
 assert p chef[:last_name] == 'Fernandez'
 p chef.class == Chef

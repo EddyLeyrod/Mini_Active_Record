@@ -12,7 +12,7 @@ class Meal < MiniActiveRecord::Model
   end
 
   def self.where(query, *args)
-    MiniActiveRecord::Model.execute( "SELECT * FROM meals WHERE #{query}", *args).map do |row|
+    MiniActiveRecord::Model.execute("SELECT * FROM meals WHERE #{query}", *args).map do |row|
       Meal.new(row)
     end
   end
@@ -26,30 +26,45 @@ class Meal < MiniActiveRecord::Model
   attr_reader :attributes, :old_attributes
 
   # e.g., Meal.new(id: 1, name: 'Chicken', created_at: '2012-12-01 05:54:30')
-  def initialize(attributes = {})
-    attributes.symbolize_keys!
-    raise_error_if_invalid_attribute!(attributes.keys)
+  # def initialize(attributes = {})
+  #   attributes.symbolize_keys!
+  #   raise_error_if_invalid_attribute!(attributes.keys)
 
-    @attributes = {}
+  #   @attributes = {}
 
-    Meal.attribute_names.each do |name|
-      @attributes[name] = attributes[name]
-    end
+  #   Meal.attribute_names.each do |name|
+  #     @attributes[name] = attributes[name]
+  #   end
 
-    @old_attributes = @attributes.dup
-  end
+  #   @old_attributes = @attributes.dup
+  # end
 
-  def [](attribute)
-    raise_error_if_invalid_attribute!(attribute)
+    # def save
+  #   if new_record?
+  #     results = insert!
+  #   else
+  #     results = update!
+  #   end
 
-    @attributes[attribute]
-  end
+  #   # When we save, remove changes between new and old attributes
+  #   @old_attributes = @attributes.dup
 
-  def []=(attribute, value)
-    raise_error_if_invalid_attribute!(attribute)
+  #   results
+  # end
 
-    @attributes[attribute] = value
-  end
+
+
+  # def [](attribute)
+  #   raise_error_if_invalid_attribute!(attribute)
+
+  #   @attributes[attribute]
+  # end
+
+  # def []=(attribute, value)
+  #   raise_error_if_invalid_attribute!(attribute)
+
+  #   @attributes[attribute] = value
+  # end
 
   def chef
     Chef.where('id = ?', self[:chef_id])
@@ -64,19 +79,6 @@ class Meal < MiniActiveRecord::Model
 
   def new_record?
     self[:id].nil?
-  end
-
-  def save
-    if new_record?
-      results = insert!
-    else
-      results = update!
-    end
-
-    # When we save, remove changes between new and old attributes
-    @old_attributes = @attributes.dup
-
-    results
   end
 
 
