@@ -99,40 +99,6 @@ module MiniActiveRecord
       self[:id].nil?
     end
 
-    def insert!
-      tabla = self.class.to_s.downcase
-      self[:created_at] = DateTime.now
-      self[:updated_at] = DateTime.now
-
-      fields = self.attributes.keys
-      values = self.attributes.values
-      marks  = Array.new(fields.length) { '?' }.join(',')
-
-      insert_sql = "INSERT INTO #{tabla}s (#{fields.join(',')}) VALUES (#{marks})"
-
-      results = MiniActiveRecord::Model.execute(insert_sql, *values)
-
-      # This fetches the new primary key and updates this instance
-      self[:id] = MiniActiveRecord::Model.last_insert_row_id
-      results
-    end
-
-
-    def update!
-    tabla = self.class.to_s.downcase
-    self[:updated_at] = DateTime.now
-
-    fields = self.attributes.keys
-    values = self.attributes.values
-
-    update_clause = fields.map { |field| "#{field} = ?" }.join(',')
-    update_sql = "UPDATE #{tabla}s SET #{update_clause} WHERE id = ?"
-
-    # We have to use the (potentially) old ID attribute in case the user has re-set it.
-    MiniActiveRecord::Model.execute(update_sql, *values, self.old_attributes[:id])
-  end
-
-
 
 
 
@@ -216,6 +182,42 @@ module MiniActiveRecord
         value
       end
     end
+
+    
+    def insert!
+      tabla = self.class.to_s.downcase
+      self[:created_at] = DateTime.now
+      self[:updated_at] = DateTime.now
+
+      fields = self.attributes.keys
+      values = self.attributes.values
+      marks  = Array.new(fields.length) { '?' }.join(',')
+
+      insert_sql = "INSERT INTO #{tabla}s (#{fields.join(',')}) VALUES (#{marks})"
+
+      results = MiniActiveRecord::Model.execute(insert_sql, *values)
+
+      # This fetches the new primary key and updates this instance
+      self[:id] = MiniActiveRecord::Model.last_insert_row_id
+      results
+    end
+
+
+    def update!
+    tabla = self.class.to_s.downcase
+    self[:updated_at] = DateTime.now
+
+    fields = self.attributes.keys
+    values = self.attributes.values
+
+    update_clause = fields.map { |field| "#{field} = ?" }.join(',')
+    update_sql = "UPDATE #{tabla}s SET #{update_clause} WHERE id = ?"
+
+    # We have to use the (potentially) old ID attribute in case the user has re-set it.
+    MiniActiveRecord::Model.execute(update_sql, *values, self.old_attributes[:id])
+  end
+
+
 
   end
 
