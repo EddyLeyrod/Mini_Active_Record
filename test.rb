@@ -11,42 +11,50 @@ end
 # assert p chef[:first_name] == 'Dennis'
 # assert chef[:last_name] == 'Adria'
 
-
-# Este es un ejemplo de como crear una prueba para el método 'create'. 
-chef = Chef.create(first_name: "Eduardo", last_name: "Fernández", email:"eduardo@gmail.com", phone:"930-028-2908 x7555",
-                          birthday:Time.now)
-
 #Si lees el método create este se compone de los métodos 'new' y 'save' por ello si 'create' funciona los otros dos también. 
-
 # Este es un ejemplo de una prueba para el método 'find'. 
 # Como en la linea pasada creamos al primer chef entonces podemos buscarlo con el id => 1
-
- ####chef = Chef.find(1)
-
 # Estas son pruebas para el método '[ ]'
 # Como sabemos que el chef que creamos se llama 'Eduardo' y apellida 'Fernandez', podemos escribir la siguiente comparación. 
+
+puts "Pruebas Chef"
+# Este es un ejemplo de como crear una prueba para el método 'create'. 
+chef = Chef.create(first_name: "Eduardo", last_name: "Fernandez", email:"eduardo@gmail.com", phone:"930-028-2908 x7555",
+                          birthday:Time.now)
+
 p chef[:first_name]
+p "all"
+ Chef.all.count
+p "find"
+ Chef.find(1) 
+p "where"
+ Chef.where('id = 20')
 assert p chef[:first_name] == 'Eduardo'
-assert p chef[:last_name] == 'Fernández'
+assert p chef[:last_name] == 'Fernandez'
+p chef.class == Chef
+p chef.meals == []
 
+p chef[:first_name] = 'bloky'
+p chef[:first_name] == 'bloky'
+#chef.add_meals("Argumentos Meals  array??")
 
-Chef.all
+puts "**********"
+puts "**********"
 
-
-
-
-
-
-=begin
-
+puts "Pruebas Meal"
 #prueba para Meal create
 meal = Meal.create(name: "Pozole", chef_id: 30)
-#prueba para el metodo find
-p Meal.find(91)
-#prueba par ael metodo '[ ]'
+Meal.all.count
+Meal.find(90)
+Meal.where('chef_id = 30')
+p meal[:name]
 assert p meal[:name] == "Pozole"
 assert p meal[:chef_id] == 30
-=end
+p meal.class == Meal
+p meal[:name]='Pastor'
+p meal[:name] == 'Pastor'
+p meal.chef == []
+p meal.new_record? === false
 
 
 puts "finished"

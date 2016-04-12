@@ -89,7 +89,7 @@ module MiniActiveRecord
 end
 
 
-metodos similares
-all
-create
-where
+#metodos similares
+#all
+#create
+#where

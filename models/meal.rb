@@ -12,7 +12,7 @@ class Meal < MiniActiveRecord::Model
   end
 
   def self.where(query, *args)
-    MiniActiveRecord::Model.execute("SELECT * FROM meals WHERE #{query}", *args).map do |row|
+    MiniActiveRecord::Model.execute( "SELECT * FROM meals WHERE #{query}", *args).map do |row|
       Meal.new(row)
     end
   end
