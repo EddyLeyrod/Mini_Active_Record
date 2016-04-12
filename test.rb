@@ -24,37 +24,39 @@ chef = Chef.create(first_name: "Eduardo", last_name: "Fernandez", email:"eduardo
 
 p chef[:first_name]
 p "all"
- Chef.all.count
+p Chef.all.count
 p "find"
  Chef.find(1) 
 p "where"
-Chef.where('last_name = "Fernandez"')
+p Chef.where('id = 1')
 assert p chef[:first_name] == 'Eduardo'
 assert p chef[:last_name] == 'Fernandez'
 p chef.class == Chef
-p chef.meals == []
+p chef.meals 
 
 p chef[:first_name] = 'bloky'
 p chef[:first_name] == 'bloky'
 #chef.add_meals("Argumentos Meals  array??")
+p chef.new_record?
+
 
 puts "**********"
 puts "**********"
 
 puts "Pruebas Meal"
 #prueba para Meal create
-meal = Meal.create(name: "Pozole", chef_id: 30)
-Meal.all.count
-Meal.find(90)
-Meal.where('chef_id = 30')
+meal = Meal.create(name: "Pozole", chef_id: 5)
+p Meal.all.count
+p Meal.find(1)
+p Meal.where('name = "Pozole"')
 p meal[:name]
 assert p meal[:name] == "Pozole"
-assert p meal[:chef_id] == 30
+assert p meal[:chef_id] == 5
 p meal.class == Meal
 p meal[:name]='Pastor'
 p meal[:name] == 'Pastor'
-p meal.chef == []
-p meal.new_record? === false
+p meal.chef
+p meal.new_record? == false
 
 
 puts "finished"
